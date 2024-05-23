@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('address');
             $table->integer('num_tickets');
-            $table->foreignIdFor('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignIdFor('country_id')->constrained()->cascadeOnDelete();
-            $table->foreignIdFor('city_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Country::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\City::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
