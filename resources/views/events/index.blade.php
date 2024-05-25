@@ -37,14 +37,14 @@
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $event->title }}
                             </th>
-                            <td class="px-6 py-4 text-center">
+                            <td class="px-6 py-4">
                                 {{ $event->start_date }}
                             </td>
-                            <td class="px-6 py-4 text-center">
+                            <td class="px-6 py-4">
                                 {{ $event->country->name }}
                             </td>
                             <td class="px-6 py-4 ">
-                                <div class="flex justify-center space-x-2">
+                                <div class="flex space-x-2">
                                     <a href="{{ route('events.edit', $event) }}"
                                        class="text-green-400 hover:text-green-600">Edit</a>
                                     <form method="POST" class="text-red-400 hover:text-red-600"
