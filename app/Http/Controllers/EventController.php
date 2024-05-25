@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateEventRequest;
 use App\Models\Country;
 use App\Models\Event;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -18,8 +19,8 @@ class EventController extends Controller
      */
     public function index(): View
     {
-        $countries = Country::all();
-        return view('events.index', compact('countries'));
+        $events = Event::with('country')->get();
+        return view('events.index', compact('events'));
     }
 
     /**
@@ -28,7 +29,8 @@ class EventController extends Controller
     public function create(): View
     {
         $countries = Country::all();
-        return view('events.create', compact('countries'));
+        $tags = Tag::all();
+        return view('events.create', compact('countries', 'tags'));
     }
 
     /**
@@ -43,7 +45,9 @@ class EventController extends Controller
             $data['user_id'] = Auth::id();
             $data['slug']=Str::slug($request->title);
 
-        Event::create($data);
+
+            $event = Event::create($data);
+            $event->tags()->attach($request->tags);
         return to_route('events.index');
         }else{
             return back();
