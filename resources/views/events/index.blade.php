@@ -47,15 +47,10 @@
                                 <div class="flex space-x-2">
                                     <a href="{{ route('events.edit', $event) }}"
                                        class="text-green-400 hover:text-green-600">Edit</a>
-                                    <form method="POST" class="text-red-400 hover:text-red-600"
-                                          action="{{ route('events.destroy', $event) }}">
+                                    <form method="POST" action="{{ route('events.destroy', $event) }}" class="inline" onsubmit="return confirm('Sure you want delete this event?');">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="{{ route('events.destroy', $event) }}"
-                                           onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                                            Delete
-                                        </a>
+                                        <button type="submit" class="text-red-400 hover:text-red-600">Delete</button>
                                     </form>
                                 </div>
                             </td>
