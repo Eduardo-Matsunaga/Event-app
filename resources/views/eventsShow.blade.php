@@ -24,10 +24,17 @@
                         eventLike: @js($like),
                         savedEvent: @js($savedEvent),
                         attending: @js($attending),
+                         isLoading: false,
                         onHandleLike() {
+                             if (this.isLoading) return;
+                            this.isLoading = true;
                             axios.post(`/events-like/{{ $event->id }}`).then(res => {
-                                this.eventLike = res.data
-                            })
+                                this.eventLike = res.data.liked;
+                                this.isLoading = false;
+                            }).catch(err => {
+                                console.error(err);
+                                this.isLoading = false;
+                            });
                         },
                         onHandleSavedEvent() {
                             axios.post(`/events-saved/{{ $event->id }}`).then(res => {
@@ -41,6 +48,7 @@
                         }
                     }">
                         <button type="button" @click="onHandleLike"
+                                :disabled="isLoading"
                                 class="text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                 :class="eventLike ? 'bg-red-700 hover:bg-red-800' : 'bg-slate-400 hover:bg-slate-500'">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
