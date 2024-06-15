@@ -14,14 +14,12 @@ class LikeSystemController extends Controller
     {
         $event = Event::findOrFail($id);
         $like = $event->likes()->where('user_id', auth()->id())->first();
-        if ($like) {
+        if (!is_null($like)) {
             $like->delete();
-            return response()->json(['liked' => false], 200);
+            return response()->json(['liked' => false]);
         } else {
-            $event->likes()->create([
-                'user_id' => auth()->id()
-            ]);
-            return response()->json(['liked' => true], 201);
+            $event->likes()->create(['user_id' => auth()->id()]);
+            return response()->json(['liked' => true]);
         }
     }
 }

@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AttendingShowController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventIndexController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GalleryIndexController;
+use App\Http\Controllers\LikedShowController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SavedShowController;
 use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\EventShowController;
@@ -38,6 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/events/{id}/comments',StoreCommentController::class)->name('events.comments');
     Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
     Route::get('/countries/{country}', function (Country $country) {return response()->json($country->cities);});
+
+    Route::get('/like-show', LikedShowController::class)->name('like.show');
+    Route::get('/attending-show', AttendingShowController::class)->name('attending.show');
+    Route::get('/saved-show', SavedShowController::class)->name('saved.show');
 });
 
 require __DIR__.'/auth.php';

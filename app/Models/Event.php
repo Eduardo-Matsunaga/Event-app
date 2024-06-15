@@ -56,14 +56,30 @@ class Event extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function liked()
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
+
+
     public function savedEvents():HasMany
     {
         return $this->hasMany(SavedEvent::class);
     }
 
+    public function saveEvents()
+    {
+        return $this->belongsToMany(User::class, 'saved_events');
+    }
+
+
     public function attendings():HasMany
     {
         return $this->hasMany(Attending::class);
+    }
+
+    public function attending(){
+        return $this->belongsToMany(User::class, 'attendings');
     }
      public function tags():BelongsToMany{
         return $this->belongsToMany(Tag::class);
