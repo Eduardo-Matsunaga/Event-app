@@ -6,7 +6,7 @@
 
             <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
                 @foreach ($events as $event)
-                    <div class="lg:flex bg-slate-100 rounded-md">
+                    <div class="lg:flex rounded-md" style="background-color: #222831;">
                         <img class="object-cover w-full h-56 rounded-lg lg:w-64"
                              src="{{ asset('/storage/' . $event->image) }}" alt="{{ $event->title }}">
 
@@ -17,10 +17,10 @@
                             </a>
 
                             <span
-                                class="text-sm text-white dark:text-gray-300 bg-indigo-400 rounded-md p-2">{{ $event->country->name }}</span>
+                                class="text-sm text-white dark:text-gray-300 bg-indigo-400 rounded-md p-2" style="background-color: #5C2FC2;">{{ $event->country->name }}</span>
                             <span class="flex flex-wrap space-x-2">
                                 @foreach ($event->tags as $tag)
-                                    <p class="text-sm p-1 bg-slate-200 rounded-md">{{ $tag->name }}</p>
+                                    <p class="text-sm p-1 bg-slate-200 rounded-md" style="background-color: #BEADFA;">{{ $tag->name }}</p>
                                 @endforeach
                             </span>
                         </div>

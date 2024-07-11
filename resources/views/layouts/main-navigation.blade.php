@@ -54,8 +54,8 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('dashboard')">
-                                    {{ __('Events Edit') }}
+                                <x-dropdown-link  :href="route('events.index')" :active="request()->routeIs('events.index')" >
+                                    {{ __('Edit Events') }}
                                 </x-dropdown-link>
 
                                 <!-- Authentication -->

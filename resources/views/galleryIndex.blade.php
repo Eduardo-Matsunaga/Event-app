@@ -6,7 +6,7 @@
 
             <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
                 @foreach ($galleries as $gallery)
-                    <div class="lg:flex bg-slate-100 rounded-md">
+                    <div class="lg:flex rounded-md" style="background-color: #222831;">
                         <img class="object-cover w-full h-56 rounded-lg lg:w-64"
                              src="{{ asset('/storage/' . $gallery->image) }}" alt="{{ $gallery->caption }}">
                     </div>
