@@ -9,6 +9,9 @@
                     <div class="lg:flex rounded-md" style="background-color: #222831;">
                         <img class="object-cover w-full h-56 rounded-lg lg:w-64"
                              src="{{ asset('/storage/' . $gallery->image) }}" alt="{{ $gallery->caption }}">
+                        <div class="flex flex-col justify-center p-6">
+                            <h2 class="text-sm text-white dark:text-gray-300 rounded-md p-2" style="background-color: #5C2FC2;">{{ $gallery->caption }}</h2>
+                        </div>
                     </div>
                 @endforeach
             </div>
