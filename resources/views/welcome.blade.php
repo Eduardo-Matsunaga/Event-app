@@ -12,12 +12,12 @@
 
                         <div class="flex flex-col justify-between py-6 lg:mx-6">
                             <a href="{{route('eventShow', $event->id)}}"
-                               class="text-xl font-semibold text-gray-800 hover:underline dark:text-white ">
+                               class="text-xl font-semibold text-purple-600 hover:underline dark:text-purple-500">
                                 {{ $event->title }}
                             </a>
 
                             <span
-                                class="text-sm text-white dark:text-gray-300 bg-indigo-400 rounded-md p-2">{{ $event->country->name }}</span>
+                                class="text-sm text-white dark:text-gray-300 bg-indigo-400 rounded-md p-2" style="background-color: #5C2FC2;">{{ $event->country->name }}</span>
                             <span class="flex flex-wrap space-x-2">
                                 @foreach ($event->tags as $tag)
                                     <p class="text-sm p-1 bg-slate-200 rounded-md" style="background-color: #BEADFA;">{{ $tag->name }}</p>
