@@ -1,11 +1,13 @@
 <x-main-layout>
     <div class="m-2 p-2 flex justify-between">
         <h3 class="mb-4 text-2xl font-bold text-indigo-700">{{ $event->title }}</h3>
-        <div class="flex space-x-2">
-            From:
-            <span class="mx-2">{{ $event->start_date->format('d/m/Y') }}</span> | <span
-                class="mx-2">{{ $event->end_date->format('d/m/Y') }}</span>
+        <div class="flex space-x-2 text-green-500">
+            <span class="text-blue-500">From:</span>
+            <span class="mx-2 text-green-500">{{ $event->start_date->format('d/m/Y') }}</span>
+            <span class="text-blue-500">|</span>
+            <span class="mx-2 text-red-500">{{ $event->end_date->format('d/m/Y') }}</span>
         </div>
+
     </div>
     <div class="mb-16 flex flex-wrap">
         <div class="mb-6 w-full shrink-0 grow-0 basis-auto lg:mb-0 lg:w-6/12 lg:pr-6">
@@ -51,38 +53,59 @@
                     }">
                         <form @submit.prevent="onHandleLike">
                             @csrf
-                            <button type="submit"
-                                    :class="eventLike ? 'bg-blue-500' : 'bg-gray-500'"
-                                    class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Like
-                            </button>
+                            <div x-data="{ eventLike: false }">
+                                <button type="submit"
+                                        :class="{
+                                                'bg-blue-500': eventLike,
+                                                'bg-gray-500': !eventLike,
+                                                'dark:bg-blue-600': eventLike,
+                                                'dark:bg-gray-600': !eventLike
+                                            }"
+                                        @click="eventLike = !eventLike"
+                                        class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Like
+                                </button>
+                            </div>
                         </form>
 
-                        <button type="button" @click="onHandleSavedEvent"
-                                class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                :class="savedEvent ? 'bg-yellow-700 hover:bg-yellow-800' : 'bg-slate-400 hover:bg-slate-500'">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                 stroke="currentColor" class="w-3.5 h3.5 mr-2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                            </svg>
-                            Save
-                        </button>
-                        <button type="button" @click="onHandleAttending"
-                                class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                :class="attending ? 'bg-indigo-700 hover:bg-indigo-800' : 'bg-slate-400 hover:bg-slate-500'">
-                            Attending
-                            <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </button>
+                        <div x-data="{ savedEvent: false, attending: false }">
+                            <button type="button" @click="savedEvent = !savedEvent"
+                                    :class="{
+            'bg-yellow-700 hover:bg-yellow-800': savedEvent,
+            'bg-slate-400 hover:bg-slate-500': !savedEvent,
+            'dark:bg-yellow-700 dark:hover:bg-yellow-800': savedEvent,
+            'dark:bg-slate-600 dark:hover:bg-slate-700': !savedEvent
+        }"
+                                    class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                     stroke="currentColor" class="w-3.5 h3.5 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                                </svg>
+                                Save
+                            </button>
+
+                            <button type="button" @click="attending = !attending"
+                                    :class="{
+            'bg-indigo-700 hover:bg-indigo-800': attending,
+            'bg-slate-400 hover:bg-slate-500': !attending,
+            'dark:bg-indigo-700 dark:hover:bg-indigo-800': attending,
+            'dark:bg-slate-600 dark:hover:bg-slate-700': !attending
+        }"
+                                    class="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-800">
+                                Attending
+                                <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 @endauth
                 <div class="flex flex-col p-4">
                     <span class="text-indigo-600 font-semibold">Host Info</span>
-                    <div class="flex space-x-4 mt-6 bg-slate-200 p-2 rounded-md">
+                    <div class="flex space-x-4 mt-6 bg-slate-200 p-2 rounded-md" style="background-color: #BEADFA;" >
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
@@ -90,7 +113,7 @@
                                       d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg></span>
                         <div class="flex flex-col">
-                            <span class="text-2xl">{{ $event->user->name }}</span>
+                            <span class="text-2xl" >{{ $event->user->name }}</span>
                             <span class="text-2xl">{{ $event->user->email }}</span>
                         </div>
                     </div>
@@ -98,7 +121,7 @@
             </div>
         </div>
 
-        <div class="w-full shrink-0 grow-0 lg:w-6/12 lg:pl-6 bg-slate-50 rounded-md p-2">
+        <div class="w-full shrink-0 grow-0 lg:w-6/12 lg:pl-6 bg-slate-50 rounded-md p-2 " style="background-color: #222831;" >
             <p class="mb-6 text-sm text-yellow-600 dark:text-neutral-400">
                 Start: <time>{{ $event->start_time }}</time>
             </p>
@@ -130,7 +153,7 @@
             </div>
             @auth
                 <div
-                    class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-slate-200 p-4 rounded-md">
+                    class="container d-flex justify-content-center align-items-center w-50 mt-6 bg-slate-200 p-4 rounded-md" style="background-color: #222831;">
                     <div class="">
                         <form action="{{ route('events.comments', $event->id) }}" class="flex justify-between space-x-2"
                               method="POST">
@@ -147,7 +170,7 @@
                     <div class="w-full">
                         @foreach ($event->comments as $comment)
                             <div class="w-full p-4 duration-500">
-                                <div class="flex items-center rounded-lg bg-white p-4 shadow-md shadow-indigo-50">
+                                <div class="flex items-center rounded-lg bg-white p-4  shadow-indigo-50" style="background-color: #222831;"  >
                                     <div>
                                         <div class="flex space-x-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
