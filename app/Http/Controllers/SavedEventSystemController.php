@@ -15,12 +15,10 @@ class SavedEventSystemController extends Controller
         $savedEvent = $event->savedEvents()->where('user_id', auth()->id())->first();
         if (!is_null($savedEvent)) {
             $savedEvent->delete();
-            return null;
+            return response()->json(['saved'=>false]);
         } else {
-            $savedEvent = $event->savedEvents()->create([
-                'user_id' => auth()->id()
-            ]);
-            return $savedEvent;
+            $event->savedEvents()->create(['user_id' => auth()->id()]);
+            return response()->json(['saved'=>true]);
         }
     }
 }

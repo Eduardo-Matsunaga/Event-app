@@ -19,6 +19,9 @@ RUN  apk update; \
      docker-php-ext-install intl;  \
      apk add --no-cache $PHPIZE_DEPS; \
      apk add --update linux-headers; \
-     apk add git;
+     apk add git; \
+     mkdir -p /usr/src/event-app/storage /usr/src/event-app/bootstrap/cache && \
+         chown -R www-data:www-data /usr/src/event-app/storage /usr/src/event-app/bootstrap/cache && \
+         chmod -R 755 /usr/src/event-app/storage /usr/src/event-app/bootstrap/cache
 
 
